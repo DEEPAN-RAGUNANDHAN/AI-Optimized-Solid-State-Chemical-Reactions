@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FCC & Reaction Yield Optimization</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+            background: url('https://source.unsplash.com/1600x900/?chemical,factory') no-repeat center center;
+            background-size: cover;
+            color: white;
+        }
+
+        .container {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            border-radius: 10px;
+            display: inline-block;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        input {
+            width: 100px;
+            padding: 5px;
+        }
+
+        #result,
+        #optimization-result {
+            margin-top: 20px;
+            font-size: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>FCC & Reaction Yield Optimization</h1>
+
+        <!-- Prediction Section -->
+        <h2>Predict Reaction Yield</h2>
+        <input type="number" id="temperature" placeholder="Temperature">
+        <input type="number" id="pressure" placeholder="Pressure">
+        <input type="number" id="catalyst" placeholder="Catalyst">
+        <input type="number" id="structure" placeholder="Structure">
+        <button onclick="predictYield()">Predict Yield</button>
+        <p id="result">Enter values and click "Predict Yield".</p>
+
+        <hr>
+
+        <!-- Optimization Section -->
+        <h2>FCC Optimization</h2>
+        <button onclick="optimizeFCC()">Optimize Yield</button>
+        <p id="optimization-result">Click to optimize FCC parameters.</p>
+    </div>
+
+    <script>
+        function predictYield() {
+            let data = {
+                "Temperature": document.getElementById("temperature").value,
+                "Pressure": document.getElementById("pressure").value,
+                "Catalyst": document.getElementById("catalyst").value,
+                "Structure": document.getElementById("structure").value
+            };
+
+            fetch('/predict', {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(data)
+            })
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('result').innerHTML =
+                        `<strong>Reaction Yield:</strong> ${data["Reaction Yield"]}%`;
+                })
+                .catch(error => console.error('Error:', error));
+        }
+
+        function optimizeFCC() {
+            fetch('/optimize')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('optimization-result').innerHTML =
+                        `<strong>Optimized Parameters:</strong><br>
+                        Temperature: ${data["Optimized Parameters"]["Temperature"].toFixed(2)}°C<br>
+                        Catalyst to Oil Ratio: ${data["Optimized Parameters"]["Catalyst_to_Oil_Ratio"].toFixed(2)}<br>
+                        Residence Time: ${data["Optimized Parameters"]["Residence_Time"].toFixed(2)} sec<br>
+                        <strong>Expected Yield:</strong> ${data["Expected Gasoline Yield"]}%`;
+                })
+                .catch(error => console.error('Error:', error));
+        }
+    </script>
+
+</body>
+
+</html>

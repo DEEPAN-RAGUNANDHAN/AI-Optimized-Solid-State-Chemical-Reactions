@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solid-State Reaction Efficiency Analysis</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+        }
+
+        .container {
+            width: 80%;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .progress-container {
+            margin: 20px 0;
+        }
+
+        .progress-bar {
+            height: 30px;
+            border-radius: 5px;
+            text-align: right;
+            color: white;
+            font-weight: bold;
+            padding-right: 10px;
+        }
+
+        .solvent {
+            width: 65%;
+            background: red;
+        }
+
+        .pressure {
+            width: 90%;
+            background: green;
+        }
+
+        .chart-container {
+            width: 60%;
+            margin: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Solid-State Reaction Efficiency Analysis</h1>
+
+        <h2>Reaction Yield Efficiency</h2>
+        <div class="progress-container">
+            <div class="progress-bar solvent">65% (Solvent-Based)</div>
+        </div>
+        <div class="progress-container">
+            <div class="progress-bar pressure">90% (Pressure-Based)</div>
+        </div>
+
+        <h2>Time Reduction Analysis</h2>
+        <p>50% Reduction in Reaction Time</p>
+
+        <div class="chart-container">
+            <canvas id="efficiencyChart"></canvas>
+        </div>
+    </div>
+
+    <script>
+        var ctx = document.getElementById('efficiencyChart').getContext('2d');
+        var chart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ["Solvent-Based", "Pressure-Based"],
+                datasets: [
+                    {
+                        label: "Yield (%)",
+                        data: [65, 90],
+                        borderColor: "green",
+                        fill: false
+                    },
+                    {
+                        label: "Time (min)",
+                        data: [120, 60],
+                        borderColor: "blue",
+                        fill: false
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: { beginAtZero: true }
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
